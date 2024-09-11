@@ -1,9 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MenuManager : MonoBehaviour {
-
+	[Header("Input")]
+	[SerializeField] private InputActionReference startGameAction = null;
+	private bool isInSelectMap = false;
+	private bool isInSelectDifficulty = false;
+	[Space]
 	[SerializeField] private WadLoader wadLoader = null;
 	[Header("New Game")]
 	[SerializeField] private GameObject startPanel = null;
@@ -15,6 +20,29 @@ public class MenuManager : MonoBehaviour {
 	[SerializeField] private GameObject endCard = null;
 
 	private static MenuManager Instance;
+
+		private void OnEnable() {
+		startGameAction.action.Enable();
+		startGameAction.action.performed += OnStartGame;
+	}
+	private void OnDisable()
+	{
+		startGameAction.action.performed -= OnStartGame;
+	}
+
+	private void OnStartGame(InputAction.CallbackContext context){
+		if(!isInSelectMap){
+			NewGame();
+			isInSelectMap = true;
+		}
+		else if(!isInSelectDifficulty){
+			SelectEpisode(1);
+			isInSelectDifficulty = true;
+		}
+		else{
+			SelectDifficulty();
+		}
+	}
 
 	void Start() {
 		MenuManager.Instance = this;
@@ -69,6 +97,7 @@ public class MenuManager : MonoBehaviour {
         Time.timeScale = 1;
 		wadLoader.LoadMap();
 		difficultyPanel.SetActive(false);
+		PlayEpisodeFirstMusic();
 		Doom.player.SetInputEnabled(true);
 	}
 }

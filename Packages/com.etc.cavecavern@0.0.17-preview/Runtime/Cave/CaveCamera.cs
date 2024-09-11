@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ETC.CaveCavern
 {
     [RequireComponent(typeof(Camera))]
-    public class CaveCamera : MonoBehaviour
+    public class CaveCamera : MonoBehaviour, INeedCavernSettings
     {
         // Consts and enums
         [System.Serializable]
@@ -119,7 +119,7 @@ namespace ETC.CaveCavern
                     // Move to the side by IPD, keeping tangential to the inner circle
                     if (renderMode == RENDER_MODE.ODS)
                     {
-                        float tangentAngle = CavernLegacyController.singleton.radius * Mathf.Sin(Mathf.Sqrt(Mathf.Pow(IPD / 2, 2) * Mathf.Pow(CavernLegacyController.singleton.radius, 2)));
+                        float tangentAngle = CavernLegacyController.Instance.radius * Mathf.Sin(Mathf.Sqrt(Mathf.Pow(IPD / 2, 2) * Mathf.Pow(CavernLegacyController.Instance.radius, 2)));
                         Vector3 tangentPos = Quaternion.AngleAxis(tangentAngle * Mathf.Rad2Deg, cam.transform.up * eye) * cam.transform.forward;
                         cam.transform.position = transform.position + tangentPos.normalized * IPD / 2000f;
                     }
@@ -140,6 +140,11 @@ namespace ETC.CaveCavern
                     cameraOutputTextures.Add(camOut);
                 }
             }
+        }
+        // Blit a render texture to outFrame
+        public static void BlitToOutFrame(RenderTexture rt)
+        {
+            Graphics.Blit(rt, outFrame);
         }
 
         private void PackFrames()

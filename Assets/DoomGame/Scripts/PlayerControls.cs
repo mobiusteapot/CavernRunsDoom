@@ -4,6 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerControls : MonoBehaviour 
 {
+
 	[Header("Player Stats")]
 	[SerializeField] private int health = 100;
 	[SerializeField] private int armour = 0;

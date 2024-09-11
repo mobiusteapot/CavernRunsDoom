@@ -24,7 +24,7 @@ namespace ETC.CaveCavern
         public float angle = 270;
 
         // Singleton pattern
-        public static CavernLegacyController singleton { get; private set; }
+        public static CavernLegacyController Instance { get; private set; }
 
         // Have our local values been set yet?
         private bool initialized = false;
@@ -48,8 +48,8 @@ namespace ETC.CaveCavern
             Shader.SetGlobalFloat("_Radius", radius);
 
             // Singleton pattern
-            if (!singleton)
-                singleton = this;
+            if (!Instance)
+                Instance = this;
             else
                 Debug.LogError("More than one CaveControls object exists. There should only be one.");
         }
@@ -84,7 +84,7 @@ namespace ETC.CaveCavern
         /// <returns>Number of panels</returns>
         public static int panelCount360()
         {
-            return singleton.resolution;
+            return Instance.resolution;
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace ETC.CaveCavern
         /// <returns>Number of panels</returns>
         public static int panelCount()
         {
-            return singleton.resolution * Mathf.FloorToInt(getAngle()) / 360;
+            return Instance.resolution * Mathf.FloorToInt(getAngle()) / 360;
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace ETC.CaveCavern
         /// <returns></returns>
         public static float getAngle()
         {
-            return singleton.angle;
+            return Instance.angle;
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace ETC.CaveCavern
         /// <returns>[Top Left, Top Right, Bottom Left, Bottom Right] (In world coordinates)</returns>
         public static Vector3[] getPanelCorners(int index)
         {
-            return singleton.GetPanelCorners(index);
+            return Instance.GetPanelCorners(index);
         }
 
         void Update()

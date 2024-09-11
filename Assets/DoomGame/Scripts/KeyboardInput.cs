@@ -1,11 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class KeyboardInput : MonoBehaviour {
+	[Header("Input")]
+	[SerializeField] private InputActionReference moveAction = null;
 	[SerializeField] private PlayerControls controller = null;
 	[SerializeField] private WeaponManager weaponManager = null;
 	
+	private void OnEnable() {
+		moveAction.action.Enable();
+		moveAction.action.performed += OnMove;
+		moveAction.action.canceled += OnMove;
+	}
+	private void OnDisable()
+	{
+		moveAction.action.performed -= OnMove;
+		moveAction.action.canceled -= OnMove;
+	}
+	private void OnMove(InputAction.CallbackContext context){
+		controller.SetInput(context.ReadValue<Vector2>());
+	}
 	// Update is called once per frame
 	void Update ()
 	{
@@ -13,7 +29,8 @@ public class KeyboardInput : MonoBehaviour {
 			return;
 
 		// Move
-		controller.SetInput (new Vector2 (Input.GetAxis ("Horizontal"), Input.GetAxis ("Vertical")));
+		// Moved to new input system
+		//controller.SetInput (new Vector2 (Input.GetAxis ("Horizontal"), Input.GetAxis ("Vertical")));
 
 		// Use Environment Items
 		if (Input.GetKeyDown (KeyCode.Space)) {
