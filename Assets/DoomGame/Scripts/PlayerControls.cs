@@ -58,11 +58,11 @@ public class PlayerControls : MonoBehaviour
 		Vector3 forward = transform.TransformDirection (Vector3.forward);
 		float curSpeed = speed * input.y;
 		controller.SimpleMove (forward * curSpeed);
-		input = Vector2.zero;
+		//input = Vector2.zero;
     }
 
-    public void SetInput(Vector2 input_) {
-    	this.input = input_;
+    public void SetInput(Vector2 input) {
+    	this.input = input;
     }
 
     public void TryUse() {

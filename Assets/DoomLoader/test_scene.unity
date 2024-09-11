@@ -1086,9 +1086,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114437788557438288, guid: 3d3a8261debd4cb40934dbd10fcd41d0,
         type: 3}
+      propertyPath: useAction
+      value: 
+      objectReference: {fileID: 2769105267503696221, guid: 76ae34b81e4954be9a4a7e5bc2ece064,
+        type: 3}
+    - target: {fileID: 114437788557438288, guid: 3d3a8261debd4cb40934dbd10fcd41d0,
+        type: 3}
       propertyPath: moveAction
       value: 
       objectReference: {fileID: -46378087954285815, guid: 76ae34b81e4954be9a4a7e5bc2ece064,
+        type: 3}
+    - target: {fileID: 114437788557438288, guid: 3d3a8261debd4cb40934dbd10fcd41d0,
+        type: 3}
+      propertyPath: shootAction
+      value: 
+      objectReference: {fileID: -1520230313285498461, guid: 76ae34b81e4954be9a4a7e5bc2ece064,
+        type: 3}
+    - target: {fileID: 114437788557438288, guid: 3d3a8261debd4cb40934dbd10fcd41d0,
+        type: 3}
+      propertyPath: switchWeapon1
+      value: 
+      objectReference: {fileID: -5735929164733894409, guid: 76ae34b81e4954be9a4a7e5bc2ece064,
+        type: 3}
+    - target: {fileID: 114437788557438288, guid: 3d3a8261debd4cb40934dbd10fcd41d0,
+        type: 3}
+      propertyPath: switchWeapon2
+      value: 
+      objectReference: {fileID: -7336117865033751952, guid: 76ae34b81e4954be9a4a7e5bc2ece064,
+        type: 3}
+    - target: {fileID: 114437788557438288, guid: 3d3a8261debd4cb40934dbd10fcd41d0,
+        type: 3}
+      propertyPath: switchWeapon3
+      value: 
+      objectReference: {fileID: -58025072423490586, guid: 76ae34b81e4954be9a4a7e5bc2ece064,
         type: 3}
     - target: {fileID: 223720464805412262, guid: 3d3a8261debd4cb40934dbd10fcd41d0,
         type: 3}
