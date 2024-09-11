@@ -1,13 +1,12 @@
 {
   "dependencies": {
     "com.etc.cavecavern": {
-      "version": "0.0.17-preview",
+      "version": "file:com.etc.cavecavern@0.0.17-preview",
       "depth": 0,
-      "source": "registry",
+      "source": "embedded",
       "dependencies": {
         "com.etc.kettletools": "0.0.4-preview"
-      },
-      "url": "https://upm.etc.cmu.edu"
+      }
     },
     "com.etc.kettletools": {
       "version": "0.0.4-preview",
