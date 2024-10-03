@@ -85,7 +85,11 @@ public class Sector
     public int tag;
 
     public List<Sidedef> Sidedefs = new List<Sidedef>();
-
+    public static void ResetSector(){
+        // Clear the tagged sectors
+        if(TaggedSectors != null)
+        TaggedSectors.Clear();
+    }
     public Sector(short hfloor, short hceil, string tfloor, string tceil, int special, int Tag, int bright)
     {
         _floorHeight = hfloor;

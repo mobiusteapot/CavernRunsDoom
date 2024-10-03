@@ -24,7 +24,9 @@ public class PlayerControls : MonoBehaviour
 	CharacterController controller;
 	private bool isInDamageZone = false;
 	private Coroutine damageCoroutine;
-	private Vector3 cameraStartPos;
+	private Coroutine lowerPlayerCoroutine;
+	[SerializeField]
+	private float lowerPlayerYOnDeathAmount = 0.5f;
 	private Vector2 input;
 
 	public int Health {
@@ -41,7 +43,6 @@ public class PlayerControls : MonoBehaviour
 		Invoke("UpdateGUIStats", 0);
 		StartCoroutine(CheckForDamageZone());
 		controller = GetComponent<CharacterController> ();
-		cameraStartPos = Camera.main.transform.localPosition;
     }
 
     void Update ()
@@ -49,7 +50,10 @@ public class PlayerControls : MonoBehaviour
 		if (Doom.isPaused) return;
 
 		if (health == 0) {
-			transform.GetChild (0).localPosition = Vector3.MoveTowards (transform.GetChild (0).localPosition, new Vector3 (0, -0.5f, 0), Time.deltaTime);
+			// Lower the player on death
+			if(lowerPlayerCoroutine == null){
+				lowerPlayerCoroutine = StartCoroutine(LowerPlayerOnDeath());
+			}
 			return;
 		}
 
@@ -83,8 +87,8 @@ public class PlayerControls : MonoBehaviour
 	{
 		if (restartMap) {
 			weaponManager.ResetMissionWeapons ();
-			Doom.UnloadCurrentMap ();
-			WadLoader.Instance.LoadMap ();
+			//Doom.UnloadCurrentMap ();
+			WadLoader.Instance.LoadMapSafe();
 		}
 
 		if (health > 0) {
@@ -92,7 +96,8 @@ public class PlayerControls : MonoBehaviour
 			return;
 		}
 		health = 100;
-		Camera.main.transform.localPosition = cameraStartPos;
+		//Camera.main.transform.localPosition = cameraStartPos;
+		lowerPlayerCoroutine = null;
 		UpdateGUIStats();
 		faceManager.UpdateFace(health);
 	}
@@ -211,6 +216,19 @@ public class PlayerControls : MonoBehaviour
 			StopCoroutine(damageCoroutine);
 		}
 		StartCoroutine(CheckForDamageZone());
+	}
+
+	private IEnumerator LowerPlayerOnDeath(){
+		var dyingStartPos = transform.position;
+		var targetPos = dyingStartPos - new Vector3(0, lowerPlayerYOnDeathAmount, 0);
+		
+		while (Vector3.Distance(transform.position, targetPos) > 0.01f)
+		{
+			transform.position = Vector3.MoveTowards(transform.position, targetPos, 0.5f * Time.deltaTime);
+			yield return null;
+		}
+
+		transform.position = targetPos;
 	}
 
 	private void OnDrawGizmos(){

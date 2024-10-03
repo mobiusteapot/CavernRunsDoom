@@ -12,7 +12,7 @@ public class MissionEndTrigger : MonoBehaviour, PokeableLinedef
 
     public void Init(Linedef linedef)
     {
-        transform.SetParent(linedef.Front.Sector.floorObject.transform);
+        //transform.SetParent(linedef.Front.Sector.floorObject.transform);
         gameObject.name = "MissionEndTrigger";
     }
 }

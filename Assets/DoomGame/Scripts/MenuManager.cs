@@ -95,8 +95,7 @@ public class MenuManager : MonoBehaviour {
 	public void SelectDifficulty() {
 		Doom.isPaused = false;
         Time.timeScale = 1;
-		// Don't reload map it breaks things
-		//wadLoader.LoadMap();
+		wadLoader.LoadMapSafe();
 		difficultyPanel.SetActive(false);
 		PlayEpisodeFirstMusic();
 		Doom.player.SetInputEnabled(true);

@@ -50,6 +50,40 @@ public class MapLoader : MonoBehaviour
     public static int minZ = int.MaxValue;
     public static int maxZ = int.MinValue;
 
+    public static void ResetAllStaticVars()
+    {
+        // Clear all lists
+        if(vertices != null)
+        vertices.Clear();
+        if(sectors != null)
+        sectors.Clear();
+        if(linedefs != null)
+        linedefs.Clear();
+        if(sidedefs != null)
+        sidedefs.Clear();
+        if(things != null)
+        things.Clear();
+
+        // Reset lump variables (if needed, set them to null or reinitialize)
+        things_lump = null;
+        linedefs_lump = null;
+        sidedefs_lump = null;
+        vertexes_lump = null;
+        segs_lump = null;
+        ssectors_lump = null;
+        nodes_lump = null;
+        sectors_lump = null;
+        reject_lump = null;
+        blockmap_lump = null;
+
+        // Reset min and max values
+        minX = int.MaxValue;
+        maxX = int.MinValue;
+        minY = int.MaxValue;
+        maxY = int.MinValue;
+        minZ = int.MaxValue;
+        maxZ = int.MinValue;
+    }
     public bool Load(string mapName)
     {
         if (WadLoader.lumps.Count == 0)
@@ -124,6 +158,7 @@ public class MapLoader : MonoBehaviour
         //sectors
         {
             int num = sectors_lump.data.Length / 26;
+            Sector.ResetSector();
             sectors = new List<Sector>(num);
 
             for (int i = 0, n = 0; i < num; i++)
@@ -158,7 +193,6 @@ public class MapLoader : MonoBehaviour
                 int bright = sectors_lump.data[n++] | ((int)sectors_lump.data[n++]) << 8;
                 int special = sectors_lump.data[n++] | ((int)sectors_lump.data[n++]) << 8;
                 int tag = sectors_lump.data[n++] | ((int)sectors_lump.data[n++]) << 8;
-
                 sectors.Add(new Sector(hfloor, hceil, tfloor, tceil, special, tag, bright));
 
                 if (hfloor < minZ) minZ = hfloor;
@@ -220,6 +254,7 @@ public class MapLoader : MonoBehaviour
 
         //linedefs
         {
+            Debug.Log("Linedef lump size: " + linedefs_lump.data.Length);
             int num = linedefs_lump.data.Length / 14;
             linedefs = new List<Linedef>(num);
 
@@ -318,18 +353,21 @@ public class MapLoader : MonoBehaviour
         }
 
         Debug.Log("Loaded map \"" + mapName + "\"");
+        // Report linedef total
+        Debug.Log("Total linedefs: " + linedefs.Count);
 
         return true;
     }
 
     public void ApplyLinedefBehavior()
     {
-        //Debug.Log("Applying linedef behaviour to dynamic meshes");
+        Debug.Log("Applying linedef behaviour to dynamic meshes: " + linedefs.Count);
         Transform holder = new GameObject("DynamicMeshes").transform;
         holder.transform.SetParent(transform);
 
         foreach (Linedef l in linedefs)
         {
+            Debug.Log("Linedef type: " + l.lineType);
             if (l.lineType == 0)
                 continue;
 
@@ -337,14 +375,11 @@ public class MapLoader : MonoBehaviour
             {
                 
                 // Cases are offset by 1?
-                // Level exit
+          
                 default:
                     break;
-                case 11: case 54:
-                    // Set parent as the holder object
+                case 11: case 54:       // Level exit
                     {
-                        Debug.Log("Setting parent as holder object: " + l.lineType + " " + l.lineTag);
-//                        l.Back.gameObject.transform.SetParent(holder);
                         l.Front.gameObject.transform.SetParent(holder);
                         // Add missionEndTrigger script to the object
                         MissionEndTrigger script = l.Front.gameObject.AddComponent<MissionEndTrigger>();

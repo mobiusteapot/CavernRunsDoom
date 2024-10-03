@@ -24,22 +24,24 @@ public class WadLoader : MonoBehaviour
     void Start() {
 		if (!LoadWad(autoloadWad))
             return;
+        TextureLoader.Instance.LoadAndBuildAll();
         LoadMapSafe();
     }
 
     public bool LoadMap() {
 		return LoadMap(autoLoadEpisode, currentMission);
     }
-    public void LoadMapSafe(){
-		TextureLoader.Instance.LoadAndBuildAll();
-		LoadMap();
-		Invoke("SetPlayerDisabled", 0.1f);
+    public bool LoadMapSafe(){
+        return LoadMap();
     }
 
     public bool LoadMap(int episode, int mission)
     {
-		if (MapLoader.vertices != null && MapLoader.vertices.Count > 0) Doom.UnloadCurrentMap();
-
+        if (MapLoader.vertices != null && MapLoader.vertices.Count > 0)
+        {
+            Debug.Log("Unloading current map");
+            Doom.UnloadCurrentMap();
+        }
         Shader.SetGlobalColor("_AMBIENTLIGHT", ambientLightColor);
 
 		autoLoadEpisode = episode;
@@ -51,8 +53,8 @@ public class WadLoader : MonoBehaviour
             return false;
 
 		if (MapLoader.Instance.Load(map))  {
+            // Create a new instance of mapLoader
             Mesher.Instance.CreateMeshes();
-
             MapLoader.Instance.ApplyLinedefBehavior();
 
             ThingManager.Instance.CreateThings(deathmatch);

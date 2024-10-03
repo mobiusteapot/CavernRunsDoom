@@ -20,9 +20,9 @@ public static class Doom {
 			Debug.LogError ("No Map Loaded, can't load next!");
 			return;
 		}
-		UnloadCurrentMap ();
+		//UnloadCurrentMap ();
 		WadLoader.Instance.currentMission++;
-		if (!WadLoader.Instance.LoadMap ()) {
+		if (!WadLoader.Instance.LoadMapSafe()) {
 			MenuManager.EnableEndCard ();
 		} else {
 			player.SetMissionStartWeapons();
@@ -65,30 +65,32 @@ public static class Doom {
 
 	public static void UnloadCurrentMap ()
 	{
-		if (MapLoader.vertices != null) {
-			MapLoader.vertices.Clear ();
-			MapLoader.sectors.Clear ();
-			MapLoader.linedefs.Clear ();
-			MapLoader.sidedefs.Clear ();
-			MapLoader.things.Clear ();
-
-			MapLoader.things_lump = null;
-			MapLoader.linedefs_lump = null;
-			MapLoader.sidedefs_lump = null;
-			MapLoader.vertexes_lump = null;
-			MapLoader.segs_lump = null;
-			MapLoader.ssectors_lump = null;
-			MapLoader.nodes_lump = null;
-			MapLoader.sectors_lump = null;
-			MapLoader.reject_lump = null;
-			MapLoader.blockmap_lump = null;
-		}
-
 		if (WadLoader.Instance != null) {
 			for (int i = WadLoader.Instance.transform.childCount - 1; i >= 0; i--) {
 				GameObject.DestroyImmediate(WadLoader.Instance.transform.GetChild(i).gameObject);
 			}
 		}
+		if (MapLoader.vertices != null) {
+			MapLoader.ResetAllStaticVars ();
+			// MapLoader.vertices.Clear ();
+			// MapLoader.sectors.Clear ();
+			// MapLoader.linedefs.Clear ();
+			// MapLoader.sidedefs.Clear ();
+			// MapLoader.things.Clear ();
+
+			// MapLoader.things_lump = null;
+			// MapLoader.linedefs_lump = null;
+			// MapLoader.sidedefs_lump = null;
+			// MapLoader.vertexes_lump = null;
+			// MapLoader.segs_lump = null;
+			// MapLoader.ssectors_lump = null;
+			// MapLoader.nodes_lump = null;
+			// MapLoader.sectors_lump = null;
+			// MapLoader.reject_lump = null;
+			// MapLoader.blockmap_lump = null;
+		}
+
+
 
 		isLoaded = false;
 	}

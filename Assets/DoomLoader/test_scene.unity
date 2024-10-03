@@ -578,6 +578,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CavernRigs
       objectReference: {fileID: 0}
+    - target: {fileID: 6792222714429626492, guid: 03ae4b060a46c4826837b548847b580e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8279436997503223965, guid: 03ae4b060a46c4826837b548847b580e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4584,7 +4589,7 @@ AudioSource:
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 0
+    m_RotationOrder: 4
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -4614,7 +4619,7 @@ AudioSource:
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 0
+    m_RotationOrder: 4
 --- !u!114 &2067837270
 MonoBehaviour:
   m_ObjectHideFlags: 0
