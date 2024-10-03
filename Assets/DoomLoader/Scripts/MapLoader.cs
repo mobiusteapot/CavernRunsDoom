@@ -324,6 +324,7 @@ public class MapLoader : MonoBehaviour
 
     public void ApplyLinedefBehavior()
     {
+        //Debug.Log("Applying linedef behaviour to dynamic meshes");
         Transform holder = new GameObject("DynamicMeshes").transform;
         holder.transform.SetParent(transform);
 
@@ -334,11 +335,34 @@ public class MapLoader : MonoBehaviour
 
             switch (l.lineType)
             {
+                
+                // Cases are offset by 1?
+                // Level exit
                 default:
                     break;
-
+                case 11: case 54:
+                    // Set parent as the holder object
+                    {
+                        Debug.Log("Setting parent as holder object: " + l.lineType + " " + l.lineTag);
+//                        l.Back.gameObject.transform.SetParent(holder);
+                        l.Front.gameObject.transform.SetParent(holder);
+                        // Add missionEndTrigger script to the object
+                        MissionEndTrigger script = l.Front.gameObject.AddComponent<MissionEndTrigger>();
+                        script.Init(l);
+                    }
+                    break;
+                        
                 case 1:
                 case 26: //keycard doors
+                    {
+                        if (l.TopFrontObject == null)
+                            break;
+
+                        l.Back.Sector.ceilingObject.transform.SetParent(holder);
+                        Door1LinedefController script = l.TopFrontObject.AddComponent<Door1LinedefController>();
+                        script.Init(l);
+                    } 
+                    break;
                 case 27:
                 case 28:
                     {

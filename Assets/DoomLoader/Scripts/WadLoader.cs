@@ -24,14 +24,16 @@ public class WadLoader : MonoBehaviour
     void Start() {
 		if (!LoadWad(autoloadWad))
             return;
-
-		TextureLoader.Instance.LoadAndBuildAll();
-		LoadMap();
-		Invoke("SetPlayerDisabled", 0.1f);
+        LoadMapSafe();
     }
 
     public bool LoadMap() {
 		return LoadMap(autoLoadEpisode, currentMission);
+    }
+    public void LoadMapSafe(){
+		TextureLoader.Instance.LoadAndBuildAll();
+		LoadMap();
+		Invoke("SetPlayerDisabled", 0.1f);
     }
 
     public bool LoadMap(int episode, int mission)

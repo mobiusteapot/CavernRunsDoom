@@ -212,4 +212,11 @@ public class PlayerControls : MonoBehaviour
 		}
 		StartCoroutine(CheckForDamageZone());
 	}
+
+	private void OnDrawGizmos(){
+		// Draw the use ray
+		Ray ray = new Ray (transform.position, weaponManager.transform.forward);
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawRay (ray);
+	}
 }

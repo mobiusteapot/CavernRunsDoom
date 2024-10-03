@@ -91,11 +91,12 @@ public class MenuManager : MonoBehaviour {
 		musicManager.PlayMusic("D_E" + wadLoader.autoLoadEpisode.ToString() + "M1");
 	}
 
-	// TODO: give this some actual effect
+	// TODO: give this some actual effort
 	public void SelectDifficulty() {
 		Doom.isPaused = false;
         Time.timeScale = 1;
-		wadLoader.LoadMap();
+		// Don't reload map it breaks things
+		//wadLoader.LoadMap();
 		difficultyPanel.SetActive(false);
 		PlayEpisodeFirstMusic();
 		Doom.player.SetInputEnabled(true);
