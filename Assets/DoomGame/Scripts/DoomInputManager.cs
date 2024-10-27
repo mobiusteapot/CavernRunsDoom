@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class KeyboardInput : MonoBehaviour {
+public class DoomInputManager : MonoBehaviour {
 	[Header("Input")]
 	[SerializeField] private InputActionReference moveAction = null;
 	[SerializeField] private InputActionReference useAction = null;

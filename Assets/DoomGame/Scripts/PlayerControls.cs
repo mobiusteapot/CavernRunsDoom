@@ -14,7 +14,7 @@ public class PlayerControls : MonoBehaviour
 	[SerializeField] private WeaponManager weaponManager = null;
 	[SerializeField] private GUIManager guiManager = null;
 	[SerializeField] private FaceManager faceManager = null;
-	[SerializeField] private GameObject inputManager = null;
+	[SerializeField] private DoomInputManager inputManager = null;
 	[Header("References")]
     [SerializeField] private AudioSource oofAudio = null;
     [Header("Layers")]
@@ -125,7 +125,7 @@ public class PlayerControls : MonoBehaviour
     }
 
     public void SetInputEnabled(bool enabled) {
-		inputManager.SetActive(enabled);
+		inputManager.enabled = enabled;
     }
 
     private void UpdateGUIStats() {
