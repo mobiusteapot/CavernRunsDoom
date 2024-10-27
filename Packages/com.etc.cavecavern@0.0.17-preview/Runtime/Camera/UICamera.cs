@@ -1,33 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
-using ETC.CaveCavern;
 using UnityEngine;
-using UnityEngine.UI;
-// Render the UI at half the native height, to a render texture
-[RequireComponent(typeof(Camera))]
-public class UICamera : MonoBehaviour
+
+namespace ETC.CaveCavern
 {
-    private Camera cam;
-    public RenderCam renderCam;
-    public RenderTexture RT;
-    public RawImage TopImage;
-    public RawImage BottomImage;
-    void Start()
+    /// <summary>
+    /// Denotes the current camera as a Cavern UI Camera.
+    /// The <see cref="UIBlitter"/> can use this camera to 
+    /// render the UI as defined by the current Cavern settings.
+    /// </summary>
+    [RequireComponent(typeof(Camera))]
+    public class UICamera : MonoBehaviour
     {
-        cam = GetComponent<Camera>();
-        RT = new RenderTexture(Screen.width, Screen.height / 2, 24);
-        RT.format = RenderTextureFormat.ARGB32;
-        cam.targetTexture = RT;
-
-        // Set top and bottom images to the render texture
-        TopImage.texture = RT;
-        BottomImage.texture = RT;
-    }
-
-    private void LateUpdate()
-    {
-        // Todo: This automatically
-        // Blit the UI to rendercam's texture
-        //CaveCamera.BlitToOutFrame(RT);
+        private Camera cam;
+        public RenderTexture RT;
+        private void Reset() {
+            // Set the camera UI to only render the UI layer
+            if (TryGetComponent(out cam))
+            {
+                cam.cullingMask = 1 << LayerMask.NameToLayer("UI");
+            }
+        }
+        private void Awake()
+        {
+            if (TryGetComponent(out cam))
+            {
+                RT = new RenderTexture(Screen.width, Screen.height / 2, 24);
+                RT.format = RenderTextureFormat.ARGB32;
+                cam.targetTexture = RT;
+            }
+        }
     }
 }

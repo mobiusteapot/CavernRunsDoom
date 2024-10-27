@@ -51,7 +51,7 @@ namespace ETC.CaveCavern
             if (!Instance)
                 Instance = this;
             else
-                Debug.LogError("More than one CaveControls object exists. There should only be one.");
+                Debug.LogError("More than one " + nameof(CavernLegacyController) + " object exists. There should only be one.");
         }
 
         /// <summary>
@@ -63,10 +63,10 @@ namespace ETC.CaveCavern
         {
             Vector3[] corners = new Vector3[4];
 
-            Vector3 blDir = Quaternion.AngleAxis(360 * index / resolution, transform.up) * transform.forward;
-            Vector3 bl = transform.position + blDir.normalized * radius + transform.up * elevation;
-            Vector3 brDir = Quaternion.AngleAxis(360 * (index+1) / resolution, transform.up) * transform.forward;
-            Vector3 br = transform.position + brDir.normalized * radius + transform.up * elevation;
+            Vector3 blDir = Quaternion.AngleAxis(360 * index / resolution, Vector3.up) * Vector3.forward;
+            Vector3 bl = transform.position + blDir.normalized * radius + Vector3.up * elevation;
+            Vector3 brDir = Quaternion.AngleAxis(360 * (index+1) / resolution, Vector3.up) * Vector3.forward;
+            Vector3 br = transform.position + brDir.normalized * radius + Vector3.up * elevation;
 
             corners[0] = bl + transform.up * height;
             corners[1] = br + transform.up * height;
@@ -128,7 +128,15 @@ namespace ETC.CaveCavern
 
             for (int i = 0; i < resolution * angle / 360; i++)
             {
-                Vector3[] corners = GetPanelCorners(i);
+                // Rotate the corners relative to this object's transform
+                
+                        Vector3[] corners = GetPanelCorners(i);
+
+        // Rotate each corner relative to the object's transform
+                for (int j = 0; j < corners.Length; j++)
+                {
+                    corners[j] = transform.position + transform.rotation * (corners[j] - transform.position);
+                }
                 Gizmos.DrawLine(corners[0], corners[1]);
                 Gizmos.DrawLine(corners[1], corners[3]);
                 Gizmos.DrawLine(corners[3], corners[2]);
