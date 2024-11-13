@@ -15,6 +15,8 @@ public class WeaponManager : MonoBehaviour {
 	[SerializeField] private AmmoConfig[] ammo = null;
 	[SerializeField] private WeaponType[] weaponTypes = null;
 
+	[SerializeField] private Transform aimTarget;
+
 	private bool canShoot = true;
 	private Dictionary<AmmoType, AmmoConfig> ammoDict = new Dictionary<AmmoType, AmmoConfig>();
 
@@ -270,8 +272,9 @@ public class WeaponManager : MonoBehaviour {
 	{
 		List<GameObject> list = new List<GameObject> ();
 		for (int i = 0; i < 10; i++) {
+			// Modified to use custom aim target (vive tracker)
 			Vector3 rayOrigin = transform.position + new Vector3 (0, (0.5f * i)-1, 0);
-			Ray ray = new Ray (rayOrigin, transform.forward);
+			Ray ray = new Ray (aimTarget.transform.position, aimTarget.transform.forward);
 			RaycastHit hit;
 			if (Physics.Raycast (ray, out hit, distance)) {
 				if (!list.Contains (hit.transform.gameObject)) {
@@ -366,5 +369,14 @@ public class WeaponManager : MonoBehaviour {
 		RaycastContinuous,
 		ProjectileOneShot,
 		ProjectileContinuous
+	}
+
+	private void OnDrawGizmos()
+	{
+		if(aimTarget != null) {
+			Ray ray = new Ray (aimTarget.transform.position, aimTarget.transform.forward);
+			Gizmos.color = Color.blue;
+			Gizmos.DrawRay(ray);
+		}
 	}
 }
