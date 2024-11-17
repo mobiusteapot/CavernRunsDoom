@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec20df507abd34537a597343dfa48755, type: 3}
   m_Name: CavernOutputSettings
   m_EditorClassIdentifier: 
+  stereoSeparation: 0.064
   rigType: 1
   camOutputMode: 0
+  stereoMode: 1
   cropRect:
     serializedVersion: 2
     x: 0
@@ -26,3 +28,7 @@ MonoBehaviour:
     y: 0
     width: 0
     height: 0
+  cubemapRenderMask: 0
+  perEyeRes: 0
+  <OutputWidth>k__BackingField: 5720
+  <OutputHeight>k__BackingField: 1080
