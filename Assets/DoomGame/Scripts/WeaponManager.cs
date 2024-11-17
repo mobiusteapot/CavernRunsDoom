@@ -272,9 +272,9 @@ public class WeaponManager : MonoBehaviour {
 	{
 		List<GameObject> list = new List<GameObject> ();
 		for (int i = 0; i < 10; i++) {
-			// Modified to use custom aim target (vive tracker)
+			// Draw a ray using the vector of transform.position to aimTarget.position to determine direction
 			Vector3 rayOrigin = transform.position + new Vector3 (0, (0.5f * i)-1, 0);
-			Ray ray = new Ray (aimTarget.transform.position, aimTarget.transform.forward);
+			Ray ray = new Ray (rayOrigin, aimTarget.transform.forward);
 			RaycastHit hit;
 			if (Physics.Raycast (ray, out hit, distance)) {
 				if (!list.Contains (hit.transform.gameObject)) {
