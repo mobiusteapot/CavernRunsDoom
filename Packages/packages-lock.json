@@ -1,13 +1,12 @@
 {
   "dependencies": {
     "com.etc.cavecavern": {
-      "version": "0.0.28-preview",
+      "version": "file:com.etc.cavecavern@0.0.28-preview",
       "depth": 0,
-      "source": "registry",
+      "source": "embedded",
       "dependencies": {
         "com.etc.kt.core": "0.3.5-preview"
-      },
-      "url": "https://upm.etc.cmu.edu"
+      }
     },
     "com.etc.kt.core": {
       "version": "0.3.5-preview",
