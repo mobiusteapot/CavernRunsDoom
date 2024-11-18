@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class WeaponManager : MonoBehaviour {
 
 	private const float AnimationUpdateTick = 0.1f;
+	public float meleeRange = 3f;
 
-	[SerializeField] private string startWeapon = "PISTOL";
+    [SerializeField] private string startWeapon = "PISTOL";
 	[SerializeField] private GUIManager guiManager = null;
 	[SerializeField] private AudioSource audioSource = null;
 	[SerializeField] private LayerMask entityLayer = 0;
@@ -107,7 +108,7 @@ public class WeaponManager : MonoBehaviour {
 				}
 				switch (weaponTypes[weaponIdx].attackType) {
 				case AttackType.MeleeOneShot:
-					TryHitRaycast(1.5f, weaponTypes[weaponIdx].damage);
+                        TryHitRaycast(meleeRange, weaponTypes[weaponIdx].damage);
 					break;
 				case AttackType.RaycastOneShot:
 					TryHitRaycast(Mathf.Infinity, weaponTypes[weaponIdx].damage);
@@ -267,16 +268,24 @@ public class WeaponManager : MonoBehaviour {
 			}
 		}
 	}
+	private Ray GetWeaponRay()
+	{
+        Vector3 rayOrigin = aimTarget.position;
+        // Draw a ray from rayOrigin using aimTarget.forward as the direction, Vector3.projectOnPlane to remove y axis
+        Vector3 rayDir = Vector3.ProjectOnPlane(aimTarget.transform.forward, Vector3.forward).normalized;
 
+        Ray ray = new Ray(rayOrigin, rayDir * 100000f);
+		return ray; 
+    }
 	private bool HitEntity (float distance, out GameObject[] hitObjects)
 	{
 		List<GameObject> list = new List<GameObject> ();
 		for (int i = 0; i < 10; i++) {
 			// Draw a ray using the vector of transform.position to aimTarget.position to determine direction
-			Vector3 rayOrigin = transform.position + new Vector3 (0, (0.5f * i)-1, 0);
-			Ray ray = new Ray (rayOrigin, aimTarget.transform.forward);
-			RaycastHit hit;
-			if (Physics.Raycast (ray, out hit, distance)) {
+
+
+            RaycastHit hit;
+			if (Physics.Raycast (GetWeaponRay(), out hit, distance)) {
 				if (!list.Contains (hit.transform.gameObject)) {
 					list.Add (hit.transform.gameObject);
 				}
@@ -374,9 +383,8 @@ public class WeaponManager : MonoBehaviour {
 	private void OnDrawGizmos()
 	{
 		if(aimTarget != null) {
-			Ray ray = new Ray (aimTarget.transform.position, aimTarget.transform.forward);
-			Gizmos.color = Color.blue;
-			Gizmos.DrawRay(ray);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawRay(GetWeaponRay());
 		}
 	}
 }

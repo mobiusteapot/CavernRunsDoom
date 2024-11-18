@@ -41,6 +41,14 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_default_Shoot;
         
+        private static SteamVR_Action_Vector2 p_default_Move;
+        
+        private static SteamVR_Action_Boolean p_default_Use;
+        
+        private static SteamVR_Action_Boolean p_default_SwitchWeaponUp;
+        
+        private static SteamVR_Action_Boolean p_default_SwitchWeaponDown;
+        
         private static SteamVR_Action_Vibration p_default_Haptic;
         
         private static SteamVR_Action_Vector2 p_platformer_Move;
@@ -153,6 +161,38 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Action_Vector2 default_Move
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_Move.GetCopy<SteamVR_Action_Vector2>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean default_Use
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_Use.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean default_SwitchWeaponUp
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_SwitchWeaponUp.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean default_SwitchWeaponDown
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_SwitchWeaponDown.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
         public static SteamVR_Action_Vibration default_Haptic
         {
             get
@@ -232,6 +272,10 @@ namespace Valve.VR
                     SteamVR_Actions.default_SnapTurnLeft,
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_Shoot,
+                    SteamVR_Actions.default_Move,
+                    SteamVR_Actions.default_Use,
+                    SteamVR_Actions.default_SwitchWeaponUp,
+                    SteamVR_Actions.default_SwitchWeaponDown,
                     SteamVR_Actions.default_Haptic,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
@@ -253,6 +297,10 @@ namespace Valve.VR
                     SteamVR_Actions.default_SnapTurnLeft,
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_Shoot,
+                    SteamVR_Actions.default_Move,
+                    SteamVR_Actions.default_Use,
+                    SteamVR_Actions.default_SwitchWeaponUp,
+                    SteamVR_Actions.default_SwitchWeaponDown,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Steering,
@@ -276,6 +324,9 @@ namespace Valve.VR
                     SteamVR_Actions.default_SnapTurnLeft,
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_Shoot,
+                    SteamVR_Actions.default_Use,
+                    SteamVR_Actions.default_SwitchWeaponUp,
+                    SteamVR_Actions.default_SwitchWeaponDown,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Brake,
                     SteamVR_Actions.buggy_Reset};
@@ -283,6 +334,7 @@ namespace Valve.VR
                     SteamVR_Actions.default_Squeeze,
                     SteamVR_Actions.buggy_Throttle};
             Valve.VR.SteamVR_Input.actionsVector2 = new Valve.VR.SteamVR_Action_Vector2[] {
+                    SteamVR_Actions.default_Move,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.buggy_Steering};
             Valve.VR.SteamVR_Input.actionsVector3 = new Valve.VR.SteamVR_Action_Vector3[0];
@@ -299,6 +351,10 @@ namespace Valve.VR
                     SteamVR_Actions.default_SnapTurnLeft,
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_Shoot,
+                    SteamVR_Actions.default_Move,
+                    SteamVR_Actions.default_Use,
+                    SteamVR_Actions.default_SwitchWeaponUp,
+                    SteamVR_Actions.default_SwitchWeaponDown,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Steering,
@@ -321,6 +377,10 @@ namespace Valve.VR
             SteamVR_Actions.p_default_SnapTurnLeft = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/SnapTurnLeft")));
             SteamVR_Actions.p_default_SnapTurnRight = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/SnapTurnRight")));
             SteamVR_Actions.p_default_Shoot = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/Shoot")));
+            SteamVR_Actions.p_default_Move = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/default/in/Move")));
+            SteamVR_Actions.p_default_Use = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/Use")));
+            SteamVR_Actions.p_default_SwitchWeaponUp = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/SwitchWeaponUp")));
+            SteamVR_Actions.p_default_SwitchWeaponDown = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/SwitchWeaponDown")));
             SteamVR_Actions.p_default_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create<SteamVR_Action_Vibration>("/actions/default/out/Haptic")));
             SteamVR_Actions.p_platformer_Move = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/platformer/in/Move")));
             SteamVR_Actions.p_platformer_Jump = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/platformer/in/Jump")));
