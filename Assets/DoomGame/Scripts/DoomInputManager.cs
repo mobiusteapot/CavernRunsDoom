@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Valve.VR;
+
 
 public class DoomInputManager : MonoBehaviour {
 	[Header("Input")]
@@ -14,8 +16,10 @@ public class DoomInputManager : MonoBehaviour {
 	[SerializeField] private float deadZone = 0.1f;
 	[SerializeField] private PlayerControls controller = null;
 	[SerializeField] private WeaponManager weaponManager = null;
-	
-	private void OnEnable() {
+
+    public SteamVR_Action_Boolean pullTrigger;
+    public SteamVR_Input_Sources inputSource = SteamVR_Input_Sources.Any;
+    private void OnEnable() {
 		moveAction.action.Enable();
 		moveAction.action.performed += OnMove;
 		moveAction.action.canceled += OnMove;
@@ -29,8 +33,26 @@ public class DoomInputManager : MonoBehaviour {
 		switchWeapon1.action.performed += ctx => weaponManager.SetSelectedWeapon(0);
 		switchWeapon2.action.performed += ctx => weaponManager.SetSelectedWeapon(1);
 		switchWeapon3.action.performed += ctx => weaponManager.SetSelectedWeapon(2);
-	}
-	private void OnDisable()
+
+		pullTrigger.AddOnStateDownListener(TriggerDown, inputSource);
+        pullTrigger.AddOnStateUpListener(TriggerUp, inputSource);
+    }
+    private void TriggerDown(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        if (controller.Health > 0)
+        {
+            weaponManager.Shoot();
+        }
+        else
+        {
+            controller.Revive(true);
+        }
+    }
+    private void TriggerUp(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+    {
+        // Do nothing
+    }
+    private void OnDisable()
 	{
 		moveAction.action.performed -= OnMove;
 		moveAction.action.canceled -= OnMove;
