@@ -50,6 +50,9 @@ public class MapLoader : MonoBehaviour
     public static int minZ = int.MaxValue;
     public static int maxZ = int.MinValue;
 
+    // Events for on level load changed
+    public Action<string> OnLevelChanged;
+
     public static void ResetAllStaticVars()
     {
         // Clear all lists
@@ -353,6 +356,7 @@ public class MapLoader : MonoBehaviour
         }
 
         Debug.Log("Loaded map \"" + mapName + "\"");
+        OnLevelChanged?.Invoke(mapName);
         // Report linedef total
         Debug.Log("Total linedefs: " + linedefs.Count);
 

@@ -83,21 +83,13 @@ public class MenuManager : MonoBehaviour {
 		difficultyPanel.SetActive(true);
 	}
 
-	public void PlayMusic(string musicID) {
-		musicManager.PlayMusic(musicID);
-	}
-
-	public void PlayEpisodeFirstMusic () {
-		musicManager.PlayMusic("D_E" + wadLoader.autoLoadEpisode.ToString() + "M1");
-	}
-
 	// TODO: give this some actual effort
 	public void SelectDifficulty() {
 		Doom.isPaused = false;
         Time.timeScale = 1;
 		wadLoader.LoadMapSafe();
 		difficultyPanel.SetActive(false);
-		PlayEpisodeFirstMusic();
+		//PlayEpisodeFirstMusic();
 		Doom.player.SetInputEnabled(true);
 	}
 }

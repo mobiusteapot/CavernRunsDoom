@@ -29,6 +29,7 @@ public class WadLoader : MonoBehaviour
     }
 
     public bool LoadMap() {
+        Debug.Log("Setting current mission to: " + currentMission);
 		return LoadMap(autoLoadEpisode, currentMission);
     }
     public bool LoadMapSafe(){
